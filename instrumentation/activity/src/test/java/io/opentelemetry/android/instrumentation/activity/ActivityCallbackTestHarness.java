@@ -10,6 +10,8 @@ import static org.mockito.Mockito.mock;
 import android.app.Activity;
 import android.os.Bundle;
 
+import io.opentelemetry.android.instrumentation.activity.ActivityCallbacks;
+
 class ActivityCallbackTestHarness {
 
     private final ActivityCallbacks callbacks;

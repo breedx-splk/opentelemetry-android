@@ -5,24 +5,27 @@
 
 package io.opentelemetry.android.instrumentation.activity;
 
-import static io.opentelemetry.android.RumConstants.LAST_SCREEN_NAME_KEY;
-import static io.opentelemetry.android.RumConstants.SCREEN_NAME_KEY;
-import static io.opentelemetry.android.RumConstants.START_TYPE_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static io.opentelemetry.android.common.RumConstants.LAST_SCREEN_NAME_KEY;
+import static io.opentelemetry.android.common.RumConstants.SCREEN_NAME_KEY;
+import static io.opentelemetry.android.common.RumConstants.START_TYPE_KEY;
 
 import android.app.Activity;
-import io.opentelemetry.android.instrumentation.startup.AppStartupTimer;
-import io.opentelemetry.android.common.ActiveSpan;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.sdk.testing.junit5.OpenTelemetryExtension;
-import io.opentelemetry.sdk.trace.data.SpanData;
-import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import java.util.List;
+
+import io.opentelemetry.android.common.ActiveSpan;
+import io.opentelemetry.android.instrumentation.startup.AppStartupTimer;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.sdk.testing.junit5.OpenTelemetryExtension;
+import io.opentelemetry.sdk.trace.data.SpanData;
 
 public class ActivityTracerTest {
     @RegisterExtension final OpenTelemetryExtension otelTesting = OpenTelemetryExtension.create();

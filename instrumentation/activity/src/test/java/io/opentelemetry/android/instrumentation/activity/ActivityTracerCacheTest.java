@@ -21,12 +21,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import io.opentelemetry.android.instrumentation.activity.ActivityTracer;
+import io.opentelemetry.android.instrumentation.activity.ActivityTracerCache;
+
 @ExtendWith(MockitoExtension.class)
 class ActivityTracerCacheTest {
 
     @Mock Activity activity;
 
-    @Mock ActivityTracer activityTracer;
+    @Mock
+    ActivityTracer activityTracer;
     @Mock Function<Activity, ActivityTracer> tracerCreator;
     AtomicReference<String> initialActivity;
 

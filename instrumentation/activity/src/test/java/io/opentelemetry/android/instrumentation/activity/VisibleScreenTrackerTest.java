@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import org.junit.jupiter.api.Test;
 
+import io.opentelemetry.android.instrumentation.activity.VisibleScreenTracker;
+
 class VisibleScreenTrackerTest {
 
     @Test

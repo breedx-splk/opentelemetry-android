@@ -18,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import io.opentelemetry.android.instrumentation.activity.RumFragmentActivityRegisterer;
+
 @ExtendWith(MockitoExtension.class)
 class RumFragmentActivityRegistererTest {
 

@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import android.app.Activity;
 import androidx.fragment.app.Fragment;
-import io.opentelemetry.android.instrumentation.RumScreenName;
-import io.opentelemetry.android.instrumentation.ScreenNameExtractor;
+import io.opentelemetry.android.instrumentation.annotations.RumScreenName;
+import io.opentelemetry.android.instrumentation.common.ScreenNameExtractor;
 import org.junit.jupiter.api.Test;
 
 class ScreenNameExtractorTest {

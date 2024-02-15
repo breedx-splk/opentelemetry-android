@@ -11,7 +11,7 @@ import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.opentelemetry.android.instrumentation.InstrumentedApplication;
+import io.opentelemetry.android.instrumentation.common.InstrumentedApplication;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
@@ -21,6 +21,8 @@ import io.opentelemetry.sdk.trace.data.StatusData;
 import io.opentelemetry.semconv.SemanticAttributes;
 import java.time.Duration;
 import java.util.function.Consumer;
+
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -85,7 +87,7 @@ class CrashReporterTest {
     }
 
     private static void assertTrace(Consumer<TraceAssert> assertion) {
-        await().atMost(Duration.ofSeconds(30))
+        Awaitility.await().atMost(Duration.ofSeconds(30))
                 .untilAsserted(() -> testing.assertTraces().hasTracesSatisfyingExactly(assertion));
     }
 }

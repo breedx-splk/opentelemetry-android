@@ -1,0 +1,25 @@
+plugins {
+    id("otel.android-library-conventions")
+    id("otel.publish-conventions")
+}
+
+description = "OpenTelemetry Android network instrumentation"
+
+android {
+    namespace = "io.opentelemetry.android.instrumentation.network"
+
+    defaultConfig {
+        consumerProguardFiles("consumer-rules.pro")
+    }
+}
+
+dependencies {
+    api(platform(libs.opentelemetry.platform))
+    api(libs.opentelemetry.api)
+    api(project(":common"))
+    api(project(":instrumentation:common-api"))
+    implementation(libs.androidx.core)
+    implementation(libs.opentelemetry.semconv)
+    implementation(libs.opentelemetry.sdk)
+    implementation(libs.opentelemetry.instrumentation.api)
+}

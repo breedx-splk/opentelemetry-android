@@ -80,7 +80,7 @@ afterEvaluate {
 fun computeArtifactId(): String {
     val path = project.path
     if (!path.contains("instrumentation")) {
-        // Return default artifacId for non auto-instrumentation publications.
+        // Return default artifactId for non auto-instrumentation publications.
         return project.name
     }
 

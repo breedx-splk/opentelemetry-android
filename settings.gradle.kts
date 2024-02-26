@@ -1,6 +1,6 @@
 rootProject.name = "opentelemetry-android"
 
-include(":android-sdk")
+include(":android-agent")
 include(":common")
 include(":instrumentation:activity")
 include(":instrumentation:annotations")

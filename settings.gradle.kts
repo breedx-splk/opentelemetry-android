@@ -15,3 +15,9 @@ include(":instrumentation:network")
 include(":instrumentation:slowrendering")
 include(":instrumentation:startup")
 include(":instrumentation:volley:library")
+includeBuild("demo-app") {
+    dependencySubstitution {
+        // I don't think this works yet, creates a circular dep or something
+        substitute(module("io.opentelemetry.android:android-agent")).using(project(":"))
+    }
+}

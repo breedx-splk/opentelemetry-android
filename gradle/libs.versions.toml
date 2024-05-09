@@ -62,6 +62,7 @@ byteBuddy-plugin = { module = "net.bytebuddy:byte-buddy-gradle-plugin", version.
 kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # demo-app
+opentelemetry-android-agent = {module = "io.opentelemetry.android:android-agent" }
 androidx-core-ktx = "androidx.core:core-ktx:1.13.1"
 androidx-lifecycle-runtime-ktx = "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
 androidx-compose-bom = "androidx.compose:compose-bom:2024.05.00"

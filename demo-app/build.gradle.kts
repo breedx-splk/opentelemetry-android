@@ -2,18 +2,27 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import java.io.FileInputStream
 import java.util.Properties
 
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.android.plugin)
+    }
+}
+
 plugins {
-    kotlin("android") version "1.9.23"
-//    id("org.jetbrains.kotlin.android")
-    id("otel.errorprone-conventions")
-    id("com.android.application")
+    id("com.android.application") version "8.4.0"
+//    id("otel.errorprone-conventions") // TODO
+    id("org.jetbrains.kotlin.android") version "1.9.23"
 }
 
 val localProperties = Properties()
 localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
-val javaVersion = rootProject.extra["java_version"] as JavaVersion
-val minKotlinVersion = rootProject.extra["kotlin_min_supported_version"] as KotlinVersion
+val javaVersion = JavaVersion.VERSION_1_8
+val minKotlinVersion = KotlinVersion.KOTLIN_1_6
 
 android {
     namespace = "io.opentelemetry.android.demo"
@@ -67,12 +76,9 @@ android {
     }
 }
 
-includeBuild("android-agent")
 
+// These may not work in isolation when referencing the parent's version catalog like this
 dependencies {
-    // Required to be kept in sync with the compatible version of jetpack compose
-//    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
@@ -82,7 +88,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     coreLibraryDesugaring(libs.desugarJdkLibs)
 
-//    implementation(project(":android-agent"))
+    implementation("io.opentelemetry.android:android-agent:0.5.0-alpha")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

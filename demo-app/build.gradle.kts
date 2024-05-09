@@ -3,13 +3,10 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    // NOTE: We specifically do NOT use the "otel.android-app-conventions" here
-    // This is due to strict version requirements between the compose compiler and
-    // the gradle kotlin plugin.
-    // See https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android") version "1.9.23"
+//    id("org.jetbrains.kotlin.android")
     id("otel.errorprone-conventions")
+    id("com.android.application")
 }
 
 val localProperties = Properties()
@@ -70,6 +67,8 @@ android {
     }
 }
 
+includeBuild("android-agent")
+
 dependencies {
     // Required to be kept in sync with the compatible version of jetpack compose
 //    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
@@ -83,7 +82,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     coreLibraryDesugaring(libs.desugarJdkLibs)
 
-    implementation(project(":android-agent"))
+//    implementation(project(":android-agent"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -7,6 +7,7 @@ package io.opentelemetry.android.demo
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.text.format.DateFormat
 import android.util.Log
 import io.opentelemetry.android.OpenTelemetryRum
 import io.opentelemetry.android.OpenTelemetryRumBuilder
@@ -21,8 +22,19 @@ import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
 import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter
 import io.opentelemetry.sdk.logs.internal.SdkEventLoggerProvider
+import java.util.Date
+import java.util.function.Supplier
 
 const val TAG = "otel.demo"
+
+class RandomAttributeSupplier: Supplier<Attributes> {
+    override fun get(): Attributes {
+        val date = Date()
+        val key = "global-" + DateFormat.format("HH:mm:ss", date)
+        val value = date.toString()
+        return Attributes.of(stringKey(key), value)
+    }
+}
 
 class OtelDemoApplication : Application() {
     @SuppressLint("RestrictedApi")
@@ -35,9 +47,10 @@ class OtelDemoApplication : Application() {
                 .setEnabled(true)
                 .setMaxCacheSize(10_000_000)
                 .build()
+        val supplier = RandomAttributeSupplier()
         val config =
             OtelRumConfig()
-                .setGlobalAttributes(Attributes.of(stringKey("toolkit"), "jetpack compose"))
+                .setGlobalAttributes(supplier)
                 .setDiskBufferingConfiguration(diskBufferingConfig)
 
         // 10.0.2.2 is apparently a special binding to the host running the emulator

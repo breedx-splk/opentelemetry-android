@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.opentelemetry.semconv.incubating)
     implementation(libs.opentelemetry.diskBuffering)
 
+    testImplementation(project(":test-common"))
     testImplementation(libs.opentelemetry.api.incubator)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.awaitility)

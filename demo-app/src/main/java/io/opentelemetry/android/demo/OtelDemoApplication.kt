@@ -9,6 +9,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import io.opentelemetry.android.OpenTelemetryRum
+import io.opentelemetry.android.OpenTelemetryRumBuilder
 import io.opentelemetry.android.agent.OpenTelemetryRumInitializer
 import io.opentelemetry.android.config.OtelRumConfig
 import io.opentelemetry.android.features.diskbuffering.DiskBufferingConfig
@@ -18,6 +19,7 @@ import io.opentelemetry.api.incubator.logs.ExtendedLogRecordBuilder
 import io.opentelemetry.api.logs.LogRecordBuilder
 import io.opentelemetry.api.metrics.LongCounter
 import io.opentelemetry.api.trace.Tracer
+import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
 import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter
 
@@ -37,12 +39,18 @@ class OtelDemoApplication : Application() {
                 .setDiskBufferingConfig(diskBufferingConfig)
 
         // 10.0.2.2 is apparently a special binding to the host running the emulator
+
+        val httpExporter = OtlpHttpSpanExporter.builder()
+            .setEndpoint("http://10.0.2.2:4318/v1/traces")
+            .setHeaders { mapOf("foo" to "bar") }
+            .build()
+        val swappableExporter = SwappableExporter(httpExporter)
         try {
-            rum = OpenTelemetryRumInitializer.initialize(
-                application = this,
-                endpointBaseUrl = "http://10.0.2.2:4318",
-                rumConfig = config
-            )
+            rum = OpenTelemetryRumBuilder.create(this, config)
+                .addSpanExporterCustomizer {
+                    swappableExporter
+                }
+                .build()
             Log.d(TAG, "RUM session started: " + rum!!.rumSessionId)
         } catch (e: Exception) {
             Log.e(TAG, "Oh no!", e)
@@ -50,6 +58,14 @@ class OtelDemoApplication : Application() {
 
         // This is needed to get R8 missing rules warnings.
         initializeOtelWithGrpc()
+
+        // Sometime later....create a new exporter and swap it in.
+        val newUpdatedExporter = OtlpHttpSpanExporter.builder()
+            .setEndpoint("http://10.0.2.2:4318/v1/traces/or/new/url")
+            .setHeaders { mapOf("someNewHeader" to "gg") }
+            .build()
+
+        swappableExporter.set(newUpdatedExporter)
     }
 
     // This is not used but it's needed to verify that our consumer proguard rules cover this use case.

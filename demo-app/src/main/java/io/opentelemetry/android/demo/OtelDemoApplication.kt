@@ -10,7 +10,6 @@ import android.app.Application
 import android.util.Log
 import io.opentelemetry.android.OpenTelemetryRum
 import io.opentelemetry.android.OpenTelemetryRumBuilder
-import io.opentelemetry.android.agent.OpenTelemetryRumInitializer
 import io.opentelemetry.android.config.OtelRumConfig
 import io.opentelemetry.android.features.diskbuffering.DiskBufferingConfig
 import io.opentelemetry.api.common.AttributeKey.stringKey
@@ -65,7 +64,7 @@ class OtelDemoApplication : Application() {
             .setHeaders { mapOf("someNewHeader" to "gg") }
             .build()
 
-        swappableExporter.set(newUpdatedExporter)
+        swappableExporter.swap(newUpdatedExporter)
     }
 
     // This is not used but it's needed to verify that our consumer proguard rules cover this use case.

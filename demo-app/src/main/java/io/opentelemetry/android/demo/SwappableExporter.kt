@@ -9,7 +9,7 @@ class SwappableExporter(val delegate: SpanExporter) : SpanExporter {
 
     private val holder: AtomicReference<SpanExporter> = AtomicReference(delegate)
 
-    fun set(newDelegate: SpanExporter){
+    fun swap(newDelegate: SpanExporter){
         holder.get().flush().whenComplete { shutdown() }
         holder.set(newDelegate)
     }

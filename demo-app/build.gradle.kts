@@ -70,9 +70,12 @@ dependencies {
 
     coreLibraryDesugaring(libs.desugarJdkLibs)
 
-    implementation("io.opentelemetry.android:instrumentation-compose-click")
+    implementation(platform("io.opentelemetry.android:opentelemetry-android-bom:0.15.0-alpha"))
+    implementation("io.opentelemetry.android.instrumentation:compose-click")
     implementation("io.opentelemetry.android:android-agent")    //parent dir
-    implementation("io.opentelemetry.android:instrumentation-sessions")
+    implementation("io.opentelemetry.android.instrumentation:sessions")
+    implementation(libs.opentelemetry.exporter.otlp)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -82,7 +85,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(libs.opentelemetry.exporter.otlp)
 
     testImplementation(libs.bundles.junit)
     androidTestImplementation(libs.androidx.junit)

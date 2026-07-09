@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":services"))
     implementation(project(":session"))
+    implementation(project(":semconv"))
 
     implementation(libs.opentelemetry.sdk)
     implementation(libs.opentelemetry.exporter.logging)

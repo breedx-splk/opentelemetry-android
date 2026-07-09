@@ -36,6 +36,7 @@ import io.opentelemetry.android.internal.services.periodic.PeriodicTaskScheduler
 import io.opentelemetry.android.internal.services.periodic.PeriodicTaskSchedulerImpl
 import io.opentelemetry.android.internal.services.storage.CacheStorage
 import io.opentelemetry.android.internal.services.storage.CacheStorageImpl
+import io.opentelemetry.android.semconv.events.AppScreenFlingEvent
 import io.opentelemetry.android.session.SessionProvider
 import io.opentelemetry.api.OpenTelemetry
 import io.opentelemetry.api.baggage.propagation.W3CBaggagePropagator
@@ -409,6 +410,11 @@ class OpenTelemetryRumBuilder internal constructor(
             )
         }
         instrumentations.forEach(Consumer(delegate::addInstrumentation))
+
+        val logger = sdk.sdkLoggerProvider.get("foo")
+        AppScreenFlingEvent(12, 12, hwPointerVelocityX = 12.9,  hwPointerVelocityY = 99.1)
+            .emit(logger)
+
         return delegate.build()
     }
 
